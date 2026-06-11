@@ -1,0 +1,115 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.875rem;
+  /* Cream / peach background like the reference */
+  --background: oklch(0.972 0.025 70);
+  --foreground: oklch(0.22 0.04 50);
+
+  --card: oklch(0.99 0.012 80);
+  --card-foreground: var(--foreground);
+
+  --muted: oklch(0.94 0.025 70);
+  --muted-foreground: oklch(0.45 0.04 50);
+
+  --border: oklch(0.88 0.035 70);
+  --input: oklch(0.88 0.035 70);
+  --ring: oklch(0.62 0.16 40);
+
+  /* Terracotta */
+  --primary: oklch(0.62 0.16 40);
+  --primary-foreground: oklch(0.99 0.01 80);
+
+  --secondary: oklch(0.92 0.04 60);
+  --secondary-foreground: oklch(0.30 0.05 50);
+
+  --accent: oklch(0.94 0.03 65);
+  --accent-foreground: var(--foreground);
+
+  --destructive: oklch(0.55 0.20 25);
+  --destructive-foreground: oklch(0.99 0.01 80);
+}
+
+.dark { color-scheme: dark; }
+
+@layer base {
+  * { border-color: var(--color-border); }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, oklch(0.95 0.04 60) 0%, transparent 60%),
+      var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4 { font-family: var(--font-serif); letter-spacing: -0.01em; }
+}
+
+@layer components {
+  .vet-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 1px 0 oklch(1 0 0 / 0.6) inset, 0 8px 24px -16px oklch(0.5 0.1 40 / 0.15);
+  }
+  .vet-input {
+    width: 100%;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 9999px;
+    padding: 0.625rem 1rem;
+    font-size: 0.9rem;
+    color: var(--color-foreground);
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .vet-input:focus { border-color: var(--color-ring); box-shadow: 0 0 0 3px oklch(0.62 0.16 40 / 0.18); }
+  .vet-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 9999px; padding: 0.6rem 1.1rem; font-weight: 600;
+    transition: filter .15s, transform .05s;
+  }
+  .vet-btn:active { transform: translateY(1px); }
+  .vet-btn-primary { background: var(--color-primary); color: var(--color-primary-foreground); }
+  .vet-btn-primary:hover { filter: brightness(1.05); }
+  .vet-btn-ghost { background: var(--color-card); color: var(--color-foreground); border: 1px solid var(--color-border); }
+  .vet-tab {
+    padding: 0.55rem 1.1rem; border-radius: 9999px; font-weight: 600;
+    background: var(--color-card); border: 1px solid var(--color-border); color: var(--color-foreground);
+  }
+  .vet-tab[data-active="true"] { background: var(--color-primary); color: var(--color-primary-foreground); border-color: transparent; }
+  .vet-link-danger { color: var(--color-destructive); font-weight: 600; }
+  .vet-link-danger:hover { text-decoration: underline; }
+}

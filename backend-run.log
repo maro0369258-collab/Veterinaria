@@ -1,0 +1,30 @@
+nohup: no se tendrá en cuenta la entrada
+API en http://localhost:4000
+Socket conectado: dzRpjYPeiUsF5ALEAAAC
+Socket conectado: Jc14B0cte7gaGy2hAAAE
+Socket conectado: Qd-i_iqiLYsG9zbvAAAG
+Socket conectado: cI__ULzEOgsylb6HAAAI
+Socket conectado: kAczLFxbuwaBxATFAAAK
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+Error: Data truncated for column 'edad' at row 1
+    at /home/jose/Documentos/vet/backend/src/routes/mascotas.js:22:26
+    at Layer.handle [as handle_request] (/home/jose/Documentos/vet/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/jose/Documentos/vet/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/jose/Documentos/vet/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/jose/Documentos/vet/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/jose/Documentos/vet/backend/node_modules/express/lib/router/index.js:284:15
+    at router.process_params (/home/jose/Documentos/vet/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/jose/Documentos/vet/backend/node_modules/express/lib/router/index.js:280:10)
+    at auth (/home/jose/Documentos/vet/backend/src/middleware/auth.js:9:5)
+    at Layer.handle [as handle_request] (/home/jose/Documentos/vet/backend/node_modules/express/lib/router/layer.js:95:5) {
+  code: 'WARN_DATA_TRUNCATED',
+  errno: 1265,
+  sqlState: '01000',
+  sqlMessage: "Data truncated for column 'edad' at row 1",
+  sql: "INSERT INTO mascotas (nombre, especie, raza, edad, dueno_id) VALUES ('Panfilo ', 'Perro', 'Pitull', '6 meses', 1)"
+}
+
+Node.js v24.13.1

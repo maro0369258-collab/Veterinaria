@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: vet_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-vet_password}
+      MYSQL_DATABASE: ${DB_NAME:-veterinaria_db}
+      MYSQL_USER: ${DB_USER:-vet_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-vet_password}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./src/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+    networks:
+      - vet_network
+    restart: unless-stopped
+
+  # API Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vet_api
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-vet_user}
+      DB_PASSWORD: ${DB_PASSWORD:-vet_password}
+      DB_NAME: ${DB_NAME:-veterinaria_db}
+      PORT: 3000
+      JWT_SECRET: ${JWT_SECRET:-dev_secret_key}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+      - ./logs:/app/logs
+    networks:
+      - vet_network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  vet_network:
+    driver: bridge
